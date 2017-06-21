@@ -1,0 +1,29 @@
+---
+- name: install etcd
+  yum:
+    name: etcd
+    state: latest
+
+- name: copy etcd.conf to remote machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/etcd/{{ item }}"
+  with_items:
+    - "etcd.conf"
+
+- name: copy etcd.service to remote machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "/usr/lib/systemd/system/{{ item }}"
+  with_items:
+    - "etcd.service"
+
+- name: enable  etcd
+  service:
+    name: etcd
+    enabled: true
+
+- name: restart  etcd
+  service:
+    name: etcd
+    state: restarted

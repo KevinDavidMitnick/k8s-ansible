@@ -1,0 +1,99 @@
+---
+- name: copy kubectl to master
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    owner:  root
+    group: root
+    mode:  0755
+  with_items:
+    - "kubectl"
+
+- name: set cluster params
+  shell: "kubectl config set-cluster kubernetes --certificate-authority={{ KUBE_SSL_DIR }}/ca.pem --embed-certs=true --server=https://{{ KUBE_APISERVER }}:6443"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: set cluster client credential
+  shell: "kubectl config set-credentials admin --client-certificate=admin.pem --embed-certs=true --client-key=admin-key.pem"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: set cluster context
+  shell: "kubectl config set-context kubernetes --cluster=kubernetes --user=admin"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: use cluster context
+  shell: "kubectl config use-context kubernetes"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: create token auth file
+  template:
+    src: "token.csv.j2"
+    dest: "{{ KUBE_SSL_DIR }}/token.csv"
+
+- name: create kubelet bootstrapping kubeconfig
+  shell: "kubectl config set-cluster kubernetes --certificate-authority={{ KUBE_SSL_DIR }}/ca.pem --embed-certs=true --server=https://{{ KUBE_APISERVER }}:6443 --kubeconfig={{ KUBE_DIR }}/bootstrap.kubeconfig"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: create bootstrapping cluster client credential
+  shell: "kubectl config set-credentials kubelet-bootstrap --token={{ BOOTSTRAP_TOKEN }} --kubeconfig={{ KUBE_DIR }}/bootstrap.kubeconfig"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: set bootstrapping context
+  shell: "kubectl config set-context default --cluster=kubernetes --user=kubelet-bootstrap --kubeconfig={{ KUBE_DIR }}/bootstrap.kubeconfig"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: use default context
+  shell: "kubectl config use-context default --kubeconfig={{ KUBE_DIR }}/bootstrap.kubeconfig"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: create kube-proxy.kubeconfig 
+  shell: "kubectl config set-cluster kubernetes --certificate-authority={{ KUBE_SSL_DIR }}/ca.pem --embed-certs=true --server=https://{{ KUBE_APISERVER }}:6443 --kubeconfig={{ KUBE_DIR }}/kube-proxy.kubeconfig"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: creatte kube-proxy client credential
+  shell: "kubectl config set-credentials kubelet-proxy --client-certificate={{ KUBE_SSL_DIR }}/kube-proxy.pem --client-key={{ KUBE_SSL_DIR }}/kube-proxy-key.pem --embed-certs=true --kubeconfig={{ KUBE_DIR }}/kube-proxy.kubeconfig"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: set kube-proxy context
+  shell: "kubectl config set-context default --cluster=kubernetes --user=kube-proxy --kubeconfig={{ KUBE_DIR }}/kube-proxy.kubeconfig"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: use default context
+  shell: "kubectl config use-context default --kubeconfig={{ KUBE_DIR }}/kube-proxy.kubeconfig"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: delete kubernetes.tar.gz
+  file:
+    path: "{{ KUBE_DIR }}/kubernetes.tar.gz"
+    state: absent
+
+- name: tar /etc/kubernetes
+  shell: " tar -czvf kubernetes.tar.gz * "
+  args:
+    chdir: "{{ KUBE_DIR }}"
+
+- name: make sure local file not exists
+  file:
+    path: "/tmp/kubernetes.tar.gz"
+    state: absent
+  delegate_to: localhost
+      
+
+- name: fetch kubernetes dir to local tmp
+  fetch:
+    src: "{{ KUBE_DIR }}/kubernetes.tar.gz"
+    dest: "/tmp/kubernetes.tar.gz"
+    fail_on_missing: yes
+    flat: yes

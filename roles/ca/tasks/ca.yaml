@@ -1,0 +1,62 @@
+---
+- name: mkdir on master
+  file:
+    path: "{{ KUBE_SSL_DIR }}"
+    owner: root
+    group: root
+    mode:  0644
+    state: directory
+    recurse: yes
+
+- name: copy ca files to master
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ KUBE_SSL_DIR }}/{{ item }}"
+  with_items:
+    - "ca-config.json"
+    - "ca-csr.json"
+    - "kubernetes-csr.json"
+    - "admin-csr.json"
+    - "kube-proxy-csr.json"
+
+- name: copy cfssl binary to master
+  copy:
+    src: "{{ item }}"
+    dest: "{{ KUBE_SSL_DIR }}/{{ item }}"
+    owner: root
+    group: root
+    mode:  0755
+  with_items:
+    - "cfssl"
+    - "cfssl-certinfo"
+    - "cfssljson"
+
+- name: generate ca key pem
+  shell: "{{ KUBE_SSL_DIR }}/cfssl gencert --initca ca-csr.json | {{ KUBE_SSL_DIR }}/cfssljson -bare ca"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: generate kubernetes key pem
+  shell: "{{ KUBE_SSL_DIR }}/cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kubernetes-csr.json | {{ KUBE_SSL_DIR }}/cfssljson -bare kubernetes"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: generate admin key pem
+  shell: "{{ KUBE_SSL_DIR }}/cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | {{ KUBE_SSL_DIR }}/cfssljson -bare admin"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: generate kube-proxy key pem
+  shell: "{{ KUBE_SSL_DIR }}/cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-proxy-csr.json | {{ KUBE_SSL_DIR }}/cfssljson -bare kube-proxy"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: verify kubernetes.pem
+  shell: "{{ KUBE_SSL_DIR }}/cfssl-certinfo -cert kubernetes.pem"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+  register: kubernetes
+
+- name: display kubernetes.pem certinfo
+  debug:
+    msg: "{{ kubernetes.stdout }}"

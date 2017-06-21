@@ -1,0 +1,15 @@
+---
+- name: make sure directory exists
+  file:
+    path: "{{ KUBE_SSL_DIR }}"
+    owner: root
+    group: root
+    mode:  0644
+    state: directory
+    recurse: yes
+
+- name: untar kubernetes.tar.gz
+  unarchive:
+    src: "/tmp/kubernetes.tar.gz"
+    dest: "{{ KUBE_DIR }}"
+
