@@ -27,3 +27,13 @@
   service:
     name: etcd
     state: restarted
+
+- name: check etcd cluster status
+  shell:  "etcdctl --ca-file=ca.pem --cert-file=kubernetes.pem --key-file=kubernetes-key.pem cluster-health"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: set flanneld network
+  shell:  "etcdctl --ca-file=ca.pem --cert-file=kubernetes.pem --key-file=kubernetes-key.pem set /flannel/network/config '{\"Network\":\"{{ KUBE_POD_NETWORK }}\",\"SubnetLen\":{{ KUBE_POD_PREFIX }},\"Backend\":{\"Type\":\"Vxlan\"}}'"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"

@@ -32,7 +32,7 @@
 - name: create token auth file
   template:
     src: "token.csv.j2"
-    dest: "{{ KUBE_SSL_DIR }}/token.csv"
+    dest: "{{ KUBE_DIR }}/token.csv"
 
 - name: create kubelet bootstrapping kubeconfig
   shell: "kubectl config set-cluster kubernetes --certificate-authority={{ KUBE_SSL_DIR }}/ca.pem --embed-certs=true --server=https://{{ KUBE_APISERVER }}:6443 --kubeconfig={{ KUBE_DIR }}/bootstrap.kubeconfig"

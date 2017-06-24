@@ -1,13 +1,11 @@
 ---
 - name: generate ca key
-  gather_facts: false
   hosts:
     - master
   roles:
     - {role: ca}
 
 - name: generate kubectl config
-  gather_facts: false
   hosts:
     - master
     - node
@@ -15,25 +13,21 @@
     - {role: config}
 
 - name: install etcd
-  gather_facts: yes
   hosts:
     - etcd
   roles:
     - {role: etcd}
 
 
-#- name: install kube master
-#  gather_facts: false
-#  hosts:
-#    - master
-#  roles:
-#    - {role: master}
-#
-#
-#- name: install kube node
-#  gather_facts: false
-#  hosts:
-#    - node
-#  roles:
-#    - {role: node}
-#
+- name: install kube master
+  hosts:
+    - master
+  roles:
+    - {role: master}
+
+
+- name: install kube node
+  hosts:
+    - node
+  roles:
+    - {role: node}
