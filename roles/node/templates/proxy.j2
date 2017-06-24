@@ -1,0 +1,7 @@
+###
+# kubernetes proxy config
+
+# default config should be adequate
+
+# Add your own!
+KUBE_PROXY_ARGS="--bind-address={{ hostvars[inventory_hostname]['ansible_ssh_host'] }} --hostname-override={{ hostvars[inventory_hostname]['ansible_ssh_host'] }} --kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig --cluster-cidr={{ KUBE_SERVICE_NETWORK }}"
