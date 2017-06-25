@@ -1,0 +1,13 @@
+---
+- name: copy approve script
+  copy:
+    src: "auto_approve.sh"
+    dest: "{{ KUBE_DIR }}/auto_approve.sh"
+    mode: 0755
+    owner: root
+    group: root
+
+- name: approve csr
+  shell: "/usr/bin/sh {{ KUBE_DIR }}/auto_approve.sh"
+  args:
+    chdir: "{{ KUBE_DIR }}"

@@ -50,3 +50,8 @@
     - "kube-apiserver"
     - "kube-controller-manager"
     - "kube-scheduler"
+
+- name: grant kubelet-bootstrap system:node-bootstrapper cluster role
+  shell: "kubectl create clusterrolebinding kubelet-bootstrap --clusterrole=system:node-bootstrapper --user=kubelet-bootstrap"
+  args:
+    chdir: "{{ KUBE_DIR }}"

@@ -13,8 +13,7 @@
 
 - name: generate kubectl config
   hosts:
-    - master
-    - node
+    - cluster
   roles:
     - {role: config}
 
@@ -34,6 +33,6 @@
 
 - name: install kube node
   hosts:
-    - node
+    - cluster
   roles:
     - {role: node}
