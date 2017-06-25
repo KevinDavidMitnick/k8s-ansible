@@ -4,7 +4,7 @@
 
 1.  安装说明:(目前不支持高可用安装，所以master节点只能是一个)
   1.1  部署k8s的系统centos 版本7.3.1611(推荐kernerl >=3.18+,默认内核亦可,推荐root用户)
-  1.2  ansible版本2.2.10+(yum instlall wget ansible -y)
+  1.2  ansible版本2.2.10+(yum install wget ansible -y)
   1.3  首先根据网站:https://git-lfs.github.com/, 安装git lfs 工具。然后克隆代码,git clone git@githnickub.com:KevinDavidMitnick/k8s-ansible.git
   1.4  克隆开始会首先克隆代码，然后下载大文件。由于仓库中k8s相关的二进制文件存在github的lfs中，克隆下载时间较长，可以取消后面的二进制文件下载。通过以下方式进行单独下载，并拷贝到仓库相应位置即可。
      ### wget  https://dl.k8s.io/v1.6.0/kubernetes-server-linux-amd64.tar.gz
