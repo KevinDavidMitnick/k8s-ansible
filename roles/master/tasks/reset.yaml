@@ -1,4 +1,7 @@
 ---
+- name: remove all clusterrolebinding
+  shell: kubectl delete clusterrolebinding --all
+
 - name: disable  master service 
   service:
     name: "{{ item }}"

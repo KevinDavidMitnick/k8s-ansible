@@ -74,6 +74,3 @@
   shell: brctl delbr docker0
   ignore_errors: True
 
-
-
-
