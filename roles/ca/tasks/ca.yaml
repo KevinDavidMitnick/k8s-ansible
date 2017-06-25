@@ -1,5 +1,5 @@
 ---
-- name: mkdir on master
+- name: mkdir KUBE_SSL_DIR on master
   file:
     path: "{{ KUBE_SSL_DIR }}"
     owner: root

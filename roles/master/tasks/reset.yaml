@@ -1,0 +1,51 @@
+---
+- name: disable  master service 
+  service:
+    name: "{{ item }}"
+    enabled: false
+  with_items:
+    - "kube-apiserver"
+    - "kube-controller-manager"
+    - "kube-scheduler"
+
+- name: stop  master service 
+  service:
+    name: "{{ item }}"
+    state: stopped
+  with_items:
+    - "kube-apiserver"
+    - "kube-controller-manager"
+    - "kube-scheduler"
+
+- name: disable master binary  to master machine
+  file:
+    path: "/usr/local/bin/{{ item }}"
+    state: absent
+  with_items:
+    - "kube-apiserver"
+    - "kube-controller-manager"
+    - "kube-scheduler"
+
+- name: remote master conf  to master machine
+  file:
+    path: "{{ KUBE_DIR }}/{{ item }}"
+    state: absent
+  with_items:
+    - "config"
+    - "apiserver"
+    - "controller-manager"
+    - "scheduler"
+
+- name: remove master service to master machine
+  file:
+    path: "/usr/lib/systemd/system/{{ item }}"
+    state: absent
+  with_items:
+    - "kube-apiserver.service"
+    - "kube-controller-manager.service"
+    - "kube-scheduler.service"
+
+- name: remove approve script
+  file:
+    path: "{{ KUBE_DIR }}/auto_approve.sh"
+    state: absent

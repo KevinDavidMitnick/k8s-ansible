@@ -1,0 +1,29 @@
+---
+- name: disable  etcd
+  service:
+    name: etcd
+    enabled: false
+
+- name: stop  etcd
+  service:
+    name: etcd
+    state: stopped
+
+- name: remove etcd
+  yum:
+    name: etcd
+    state: absent
+
+- name: remote etcd.conf to remote machine
+  file:
+    path: "/etc/etcd/{{ item }}"
+    state: absent
+  with_items:
+    - "etcd.conf"
+
+- name: remove etcd.service to remote machine
+  file:
+    path: "/usr/lib/systemd/system/{{ item }}"
+    state: absent
+  with_items:
+    - "etcd.service"

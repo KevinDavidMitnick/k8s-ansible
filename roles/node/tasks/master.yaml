@@ -1,5 +1,4 @@
 ---
-
 - name: copy approve script
   copy:
     src: "auto_approve.sh"

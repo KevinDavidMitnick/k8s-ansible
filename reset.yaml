@@ -1,0 +1,32 @@
+---
+- name: remove kube node
+  hosts:
+    - cluster
+  roles:
+    - {role: node}
+
+- name: remove kube master
+  hosts:
+    - master
+  roles:
+    - {role: master}
+
+- name: remove etcd
+  hosts:
+    - etcd
+  roles:
+    - {role: etcd}
+
+- name: remove ca key
+  hosts:
+    - cluster
+  roles:
+    - {role: ca}
+
+- name: remove kubectl config
+  hosts:
+    - cluster
+  roles:
+    - {role: config}
+
+

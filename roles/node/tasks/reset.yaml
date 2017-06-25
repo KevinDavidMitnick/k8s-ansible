@@ -1,0 +1,79 @@
+---
+- name: disable flanneld and docker
+  service:
+    name: "{{ item }}"
+    enabled: false
+  with_items:
+    - "flanneld"
+    - "docker"
+
+- name: stop docker
+  service:
+    name: docker
+    state: stopped
+
+- name: stop flanneld
+  service:
+    name: flanneld
+    state: stopped
+  retries: 3
+  delay: "{{ retry_stagger | random + 3}}"
+
+- name: remote  flannel and docker packages
+  yum:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - "conntrack"
+    - "flannel"
+    - "docker"
+
+- name: make sure kublet workdir is not exists
+  file:
+    path: "/var/lib/kubelet"
+    state: absent
+
+- name: remove kubelet and kube-proxy binary to node
+  file:
+    path: "/usr/local/bin/{{ item }}"
+    state: absent
+  with_items:
+    - "kubelet"
+    - "kube-proxy"
+
+- name: remove kubelet and kube-proxy config to node
+  file:
+    path: "{{ KUBE_DIR }}/{{ item }}"
+    state: absent
+  with_items:
+    - "config"
+    - "kubelet"
+    - "proxy"
+
+- name: remove kubelet and kube-proxy service to node
+  file:
+    path: "/usr/lib/systemd/system/{{ item }}"
+    state: absent
+  with_items:
+    - "kubelet.service"
+    - "kube-proxy.service"
+
+- name: install net tools 
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - "net-tools"
+    - "bridge-utils"
+
+- name: stop bridge docker0
+  shell: ifconfig  docker0 down
+  ignore_errors: True
+
+- name: remove bridge docker0
+  shell: brctl delbr docker0
+  ignore_errors: True
+
+
+
+

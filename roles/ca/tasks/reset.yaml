@@ -1,0 +1,5 @@
+---
+- name: make sure KUBE_SSL_DIR is not exists on master
+  file:
+    path: "{{ KUBE_SSL_DIR }}"
+    state: absent

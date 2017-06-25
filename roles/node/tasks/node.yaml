@@ -27,7 +27,7 @@
 - name: systemctl daemon-reload
   shell: systemctl daemon-reload
 
-- name: enable flanneld
+- name: enable flanneld and docker
   service:
     name: "{{ item }}"
     enabled: true

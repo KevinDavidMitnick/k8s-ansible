@@ -1,0 +1,17 @@
+---
+- name: remove kubectl to master
+  file:
+    path: "/usr/local/bin/{{ item }}"
+    state: absent
+  with_items:
+    - "kubectl"
+
+- name: remove KUBE_DIR 
+  file:
+    path: "{{ KUBE_DIR }}"
+    state: absent
+
+- name: remove kub cache dir
+  file:
+    path: "~/.kube"
+    state: absent
