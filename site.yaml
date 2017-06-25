@@ -1,4 +1,10 @@
 ---
+- name: preinstall
+  hosts:
+    - cluster
+  roles:
+    - {role: common}
+
 - name: generate ca key
   hosts:
     - master

@@ -1,0 +1,14 @@
+---
+- name: disable setenforce
+  selinux:
+    state: disabled
+
+- name: setenforce 0
+  shell: setenforce 0
+  ignore_errors: True
+
+- name: shutdown firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
