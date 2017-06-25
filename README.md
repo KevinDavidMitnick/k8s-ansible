@@ -7,8 +7,8 @@
   1.2  ansible版本2.2.10+(yum instlall wget ansible -y)
   1.3  首先根据网站:https://git-lfs.github.com/, 安装git lfs 工具。然后克隆代码,git clone git@githnickub.com:KevinDavidMitnick/k8s-ansible.git
   1.4  克隆开始会首先克隆代码，然后下载大文件。由于仓库中k8s相关的二进制文件存在github的lfs中，克隆下载时间较长，可以取消后面的二进制文件下载。通过以下方式进行单独下载，并拷贝到仓库相应位置即可。
-     ### wget  https://d1.k8s.io/v1.6.0/kubernetes-server-linux-amd64.tar.gz
-     ### tar -zxvf  kubernetes-server-linux-amd64.tar.gz
+     ### wget  https://dl.k8s.io/v1.6.0/kubernetes-server-linux-amd64.tar.gz
+     ### tar -zxvf  kubernetes-server-linux-amd64.tar.gz
      ### cd kubernetes 
      ### tar -zxvf kubernetes-src.tar.gz ，然后拷贝server/bin/{kube-apiserver,kube-controller-manager,kube-schedule}到仓库的roles/master/files/kube-apiserver；拷贝server/bin/{kubelet,kube-proxy}到仓库的roles/node/files/下面
 ansible install k8s1.6 on centos7.3
