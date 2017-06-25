@@ -23,3 +23,4 @@ ansible install k8s1.6 on centos7.3
     ### 安装结束之后，在master节点执行命令kubectl get nodes，检测是否三个节点都是ready,如果是代表安装成功，如果不是，则首先执行命令: kubectl get csr,查看是否有未授权机器，如果有，使用kubectl approve xxxx(id号)
     ### 如果是其他错误，请提issuse或者pull request.
     ### 安装之后，如果要新添加node,编辑inventory/add_node文件，其他不动，把node下面修改为仅仅需要添加的节点信息,然后执行命令如下: ansible-playbook -i inventory/add_node -e action=add add_node.yaml
+    ### 当想清空环境时,可执行命令ansible-playbook -i inventory/hosts -e action=reset reset.yaml 进行重置,然后重启虚拟机或者机器。
