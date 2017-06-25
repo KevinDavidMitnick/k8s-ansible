@@ -1,0 +1,6 @@
+---
+- name: upload ssl configs and ca configs
+  include: "upload.yaml"
+
+- name: include install.yaml
+  include: "install.yaml"

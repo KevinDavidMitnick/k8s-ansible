@@ -1,0 +1,12 @@
+
+---
+- name: include node.yaml
+  include: "node.yaml"
+  when:
+    -  inventory_hostname in groups['node']
+
+- name: include master.yaml
+  include: "master.yaml"
+  when:
+    -  inventory_hostname  == groups['master'][0]
+

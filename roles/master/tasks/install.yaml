@@ -1,0 +1,57 @@
+---
+- name: copy master binary  to master machine
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "kube-apiserver"
+    - "kube-controller-manager"
+    - "kube-scheduler"
+
+- name: copy master conf  to master machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ KUBE_DIR }}/{{ item }}"
+  with_items:
+    - "config"
+    - "apiserver"
+    - "controller-manager"
+    - "scheduler"
+
+- name: copy master service to master machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "/usr/lib/systemd/system/{{ item }}"
+  with_items:
+    - "kube-apiserver.service"
+    - "kube-controller-manager.service"
+    - "kube-scheduler.service"
+
+- name: daemon reload
+  shell: systemctl daemon-reload
+
+- name: enable  master service 
+  service:
+    name: "{{ item }}"
+    enabled: true
+  with_items:
+    - "kube-apiserver"
+    - "kube-controller-manager"
+    - "kube-scheduler"
+
+- name: restart  master service 
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - "kube-apiserver"
+    - "kube-controller-manager"
+    - "kube-scheduler"
+
+- name: grant kubelet-bootstrap system:node-bootstrapper cluster role
+  shell: "kubectl create clusterrolebinding kubelet-bootstrap --clusterrole=system:node-bootstrapper --user=kubelet-bootstrap"
+  args:
+    chdir: "{{ KUBE_DIR }}"

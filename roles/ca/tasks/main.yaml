@@ -1,5 +1,3 @@
 ---
-- name: include ca.yaml
-  include: "ca.yaml"
-  when:
-    -  inventory_hostname  == groups['master'][0]
+- name: deside action yaml include
+  include: "{{ action }}.yaml"

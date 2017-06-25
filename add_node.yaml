@@ -1,0 +1,7 @@
+---
+- name: install kube node
+  hosts:
+    - master
+    - node
+  roles:
+    - {role: node}

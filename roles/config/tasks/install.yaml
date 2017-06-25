@@ -1,0 +1,11 @@
+---
+- name: include config.yaml
+  include: "config.yaml"
+  when:
+    -  inventory_hostname  == groups['master'][0]
+
+- name: upload config
+  include: "upload.yaml"
+  when:
+    -  inventory_hostname in groups['cluster']
+

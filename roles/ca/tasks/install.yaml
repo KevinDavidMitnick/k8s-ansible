@@ -1,0 +1,5 @@
+---
+- name: include ca.yaml
+  include: "ca.yaml"
+  when:
+    -  inventory_hostname  == groups['master'][0]

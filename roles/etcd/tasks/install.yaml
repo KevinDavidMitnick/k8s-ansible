@@ -1,0 +1,39 @@
+---
+- name: install etcd
+  yum:
+    name: etcd
+    state: latest
+
+- name: copy etcd.conf to remote machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/etcd/{{ item }}"
+  with_items:
+    - "etcd.conf"
+
+- name: copy etcd.service to remote machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "/usr/lib/systemd/system/{{ item }}"
+  with_items:
+    - "etcd.service"
+
+- name: enable  etcd
+  service:
+    name: etcd
+    enabled: true
+
+- name: restart  etcd
+  service:
+    name: etcd
+    state: restarted
+
+- name: check etcd cluster status
+  shell:  "etcdctl --ca-file=ca.pem --cert-file=kubernetes.pem --key-file=kubernetes-key.pem cluster-health"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
+
+- name: set flanneld network
+  shell:  "etcdctl --ca-file=ca.pem --cert-file=kubernetes.pem --key-file=kubernetes-key.pem set /flannel/network/config '{\"Network\":\"{{ KUBE_POD_NETWORK }}\",\"SubnetLen\":{{ KUBE_POD_PREFIX }},\"Backend\":{\"Type\":\"Vxlan\"}}'"
+  args:
+    chdir: "{{ KUBE_SSL_DIR }}"
