@@ -1,0 +1,11 @@
+---
+- name: remove kubedns
+  shell: kubectl delete -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/kubedns"
+
+- name: make sure kubedns directory not exists
+  file:
+    path: "{{ KUBE_DIR }}/kubedns"
+    state: absent
+

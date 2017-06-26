@@ -10,3 +10,8 @@
   when:
     -  inventory_hostname  == groups['master'][0]
 
+- name: include pull.yaml
+  include: "pull.yaml"
+  when:
+    -  inventory_hostname in groups['node']
+

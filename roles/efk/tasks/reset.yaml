@@ -1,0 +1,11 @@
+---
+- name: remove efk
+  shell: kubectl delete -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/efk"
+
+- name: make sure efk directory not exists
+  file:
+    path: "{{ KUBE_DIR }}/efk"
+    state: absent
+

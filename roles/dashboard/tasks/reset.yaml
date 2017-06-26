@@ -1,0 +1,11 @@
+---
+- name: remove dashboard
+  shell: kubectl delete -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/dashboard"
+
+- name: make sure dashboard directory not exists
+  file:
+    path: "{{ KUBE_DIR }}/dashboard"
+    state: absent
+

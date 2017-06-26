@@ -1,0 +1,19 @@
+---
+- name: make sure dashboard directory exists
+  file:
+    path: "{{ KUBE_DIR }}/dashboard"
+    state: directory
+    
+- name: copy dashboard yaml  to master machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ KUBE_DIR }}/dashboard/{{ item }}"
+  with_items:
+    - "dashboard-controller.yaml"
+    - "dashboard-rbac.yaml"
+    - "dashboard-service.yaml"
+
+- name: install dashboard
+  shell: kubectl create -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/dashboard"

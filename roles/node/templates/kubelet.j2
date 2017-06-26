@@ -14,7 +14,7 @@ KUBELET_HOSTNAME="--hostname-override={{ hostvars[inventory_hostname]['ansible_s
 KUBELET_API_SERVER="--api-servers=http://{{ KUBE_APISERVER }}:8080"
 #
 ## pod infrastructure container
-KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image={{ INSECURE_REGISTRY }}/k8s/pod-infrastructure:latest"
+KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image={{ IMAGE_PREFIX }}/pod-infrastructure:latest"
 #
 ## Add your own!
 KUBELET_ARGS="--cgroup-driver=systemd --cluster-dns={{ KUBE_DNS_SVCIP }} --experimental-bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --require-kubeconfig --cert-dir=/etc/kubernetes/ssl --cluster-domain=cluster.local. --hairpin-mode promiscuous-bridge --serialize-image-pulls=false"

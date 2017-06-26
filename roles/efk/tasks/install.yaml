@@ -1,0 +1,23 @@
+---
+- name: make sure efk directory exists
+  file:
+    path: "{{ KUBE_DIR }}/efk"
+    state: directory
+    
+- name: copy efk yaml to master machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ KUBE_DIR }}/efk/{{ item }}"
+  with_items:
+    - "efk-rbac.yaml"
+    - "efk-controller.yaml"
+    - "efk-service.yaml"
+    - "fluentd-es-ds.yaml"
+    - "fluentd-es-rbac.yaml"
+    - "kibana-controller.yaml"
+    - "kibana-service.yaml"
+
+- name: install efk
+  shell: kubectl create -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/efk"

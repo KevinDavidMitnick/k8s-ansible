@@ -17,16 +17,35 @@
   roles:
     - {role: etcd}
 
-
 - name: install kube master
   hosts:
     - master
   roles:
     - {role: master}
 
-
 - name: install kube node
   hosts:
     - cluster
   roles:
     - {role: node}
+
+- name: install kubedns
+  hosts:
+    - master
+  roles:
+    - {role: kubedns,
+       when: enable_kubedns | bool }
+
+- name: install dashboard
+  hosts:
+    - master
+  roles:
+    - {role: dashboard,
+       when: enable_dashboard | bool }
+    
+- name: install efk
+  hosts:
+    - master
+  roles:
+    - {role: efk,
+       when: enable_efk | bool }
