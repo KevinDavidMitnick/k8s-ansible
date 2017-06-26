@@ -49,3 +49,10 @@
   roles:
     - {role: efk,
        when: enable_efk | bool }
+
+- name: install traefik
+  hosts:
+    - master
+  roles:
+    - {role: traefik,
+       when: enable_traefik | bool }

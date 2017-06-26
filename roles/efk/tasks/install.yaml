@@ -10,8 +10,8 @@
     dest: "{{ KUBE_DIR }}/efk/{{ item }}"
   with_items:
     - "efk-rbac.yaml"
-    - "efk-controller.yaml"
-    - "efk-service.yaml"
+    - "es-controller.yaml"
+    - "es-service.yaml"
     - "fluentd-es-ds.yaml"
     - "fluentd-es-rbac.yaml"
     - "kibana-controller.yaml"

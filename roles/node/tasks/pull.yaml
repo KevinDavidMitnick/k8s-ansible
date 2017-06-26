@@ -1,5 +1,4 @@
 ---
 - name: pull base pod image
-  docker_image:
-    name: "{{ IMAGE_PREFIX }}/pod-infrastructure:latest"
+  shell: docker pull "{{ IMAGE_PREFIX }}/pod-infrastructure:latest"
   

@@ -1,9 +1,9 @@
 ---
-KUBE_APISERVER: "10.21.0.130"
+KUBE_APISERVER: "10.21.1.141"
 INSECURE_REGISTRY: "10.21.1.151"
 
 #image prefix ,for example, IMAGE_PREFIX: "{{ INSECURE_REGISTRY }}" ,or github repo name like shadowalker911
-IMAGE_PREFIX: "shadowalker911"
+IMAGE_PREFIX: "{{ INSECURE_REGISTRY }}/k8s"
 KUBE_SERVICE_NETWORK: "10.254.0.0/16"
 KUBE_POD_NETWORK: "172.30.0.0/16"
 KUBE_POD_PREFIX: 24
@@ -17,3 +17,4 @@ BOOTSTRAP_TOKEN: "f722e64edb9170855fcce338042bc04a"
 enable_kubedns: "yes"
 enable_dashboard: "yes"
 enable_efk: "yes"
+enable_traefik: "yes"

@@ -3,6 +3,7 @@
 # k8s-ansible
 
 1.  安装说明:(目前不支持高可用安装，所以master节点只能是一个)
+  1.0 必须确保安装的机器(虚拟机),已经关闭了selinux和firewalld,设置方法通过systemctl stop firewalld && systemctl disable firewalld.以及将/etc/sysconfig/selinux中改为disabled,并且执行seteonforce 0, 然后reboot
   1.1  部署k8s的系统centos 版本7.3.1611(推荐kernerl >=3.18+,默认内核亦可,推荐root用户)
   1.2  ansible版本2.2.10+(yum install wget ansible -y)
   1.3  首先根据网站:https://git-lfs.github.com/, 安装git lfs 工具。然后克隆代码,git clone git@githnickub.com:KevinDavidMitnick/k8s-ansible.git
