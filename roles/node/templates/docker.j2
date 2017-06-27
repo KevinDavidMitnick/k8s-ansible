@@ -10,7 +10,7 @@ fi
 # pull use the ADD_REGISTRY option to list a set of registries, each prepended
 # with --add-registry flag. The first registry added will be the first registry
 # searched.
-ADD_REGISTRY='--add-registry {{ FAST_REGISTRY }}'
+#ADD_REGISTRY='--add-registry {{ FAST_REGISTRY }}'
 
 # If you want to block registries from being used, uncomment the BLOCK_REGISTRY
 # option and give it a set of registries, each prepended with --block-registry
@@ -22,6 +22,8 @@ ADD_REGISTRY='--add-registry {{ FAST_REGISTRY }}'
 # distributed, you can tell docker to not look for full authorization by
 # adding the registry to the INSECURE_REGISTRY line and uncommenting it.
 INSECURE_REGISTRY='--insecure-registry={{ INSECURE_REGISTRY }}'
+
+REGISTRY_MIRROR='--registry-mirror={{ FAST_REGISTRY }}'
 
 # On an SELinux system, if you remove the --selinux-enabled option, you
 # also need to turn on the docker_transition_unconfined boolean.
