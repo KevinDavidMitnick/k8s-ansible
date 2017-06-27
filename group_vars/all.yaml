@@ -1,6 +1,7 @@
 ---
-KUBE_APISERVER: "10.21.1.141"
+KUBE_APISERVER: "10.21.0.130"
 INSECURE_REGISTRY: "10.21.1.151"
+FAST_REGISTRY: "https://u1qbyfsc.mirror.aliyuncs.comservice"
 
 #image prefix ,for example, IMAGE_PREFIX: "{{ INSECURE_REGISTRY }}" ,or github repo name like shadowalker911
 IMAGE_PREFIX: "{{ INSECURE_REGISTRY }}/k8s"

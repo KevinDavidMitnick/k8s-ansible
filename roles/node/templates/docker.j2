@@ -10,7 +10,7 @@ fi
 # pull use the ADD_REGISTRY option to list a set of registries, each prepended
 # with --add-registry flag. The first registry added will be the first registry
 # searched.
-#ADD_REGISTRY='--add-registry registry.access.redhat.com'
+ADD_REGISTRY='--add-registry {{ FAST_REGISTRY }}'
 
 # If you want to block registries from being used, uncomment the BLOCK_REGISTRY
 # option and give it a set of registries, each prepended with --block-registry
