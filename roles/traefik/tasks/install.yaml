@@ -1,0 +1,20 @@
+---
+- name: make sure traefik directory exists
+  file:
+    path: "{{ KUBE_DIR }}/traefik"
+    state: directory
+    
+- name: copy traefik yaml  to master machine
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ KUBE_DIR }}/traefik/{{ item }}"
+  with_items:
+    - "ingress-rbac.yaml"
+    - "ingress.yaml"
+    - "traefik.yaml"
+    - "ui.yaml"
+
+- name: install traefik
+  shell: kubectl create -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/traefik"

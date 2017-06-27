@@ -1,0 +1,11 @@
+---
+- name: remove traefik
+  shell: kubectl delete -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/traefik"
+
+- name: make sure traefik directory not exists
+  file:
+    path: "{{ KUBE_DIR }}/traefik"
+    state: absent
+
