@@ -1,2 +1,0 @@
-kube-proxy filter=lfs diff=lfs merge=lfs -text
-kubelet filter=lfs diff=lfs merge=lfs -text

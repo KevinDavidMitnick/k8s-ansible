@@ -1,3 +1,0 @@
-kube-apiserver filter=lfs diff=lfs merge=lfs -text
-kube-controller-manager filter=lfs diff=lfs merge=lfs -text
-kube-scheduler filter=lfs diff=lfs merge=lfs -text
