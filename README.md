@@ -26,5 +26,6 @@ ansible install k8s1.6 on centos7.3
     ### 在 group_vars/all.yaml中可以编辑 enable_kubedns: "yes",enable_dashboard: "yes",enable_efk: "yes"　等，决定是否安装所示组件，默认是yes,可以改为no,由于dockerhub下载镜像比较慢，需要耐心等待.
     ### 安装之后，如果要新添加node,编辑inventory/add_node文件，其他不动，把node下面修改为仅仅需要添加的节点信息,然后执行命令如下: ansible-playbook -i inventory/add_node -e action=add add_node.yaml
     ### 当想清空环境时,可执行命令ansible-playbook -i inventory/hosts -e action=reset reset.yaml 进行重置,然后重启虚拟机或者机器。
+    ### dashboard tls key generate,in master KUBE_SSL_DIR by ：openssl pkcs12 -export -in admin.pem -out admin.p12 -inkey admin-key.pem
 
 
