@@ -1,10 +1,10 @@
 ---
-KUBE_APISERVER: "10.21.1.141"
+KUBE_APISERVER: "10.21.0.130"
 INSECURE_REGISTRY: "10.21.1.151"
 FAST_REGISTRY: "https://u1qbyfsc.mirror.aliyuncs.comservice"
 
 #image prefix ,for example, IMAGE_PREFIX: "{{ INSECURE_REGISTRY }}" ,or github repo name like shadowalker911(this is my repo on dockerhub,provide all need docker images)
-IMAGE_PREFIX: "10.21.1.151/k8s"
+IMAGE_PREFIX: "shadowalker911"
 KUBE_SERVICE_NETWORK: "10.254.0.0/16"
 KUBE_POD_NETWORK: "172.30.0.0/16"
 KUBE_POD_PREFIX: 24
@@ -19,3 +19,4 @@ enable_kubedns: "yes"
 enable_dashboard: "yes"
 enable_efk: "yes"
 enable_traefik: "yes"
+enable_prometheus: "yes"

@@ -1,15 +1,15 @@
 [etcd]
-k8s1 ansible_ssh_host=10.21.1.141 ansible_ssh_user=root
-k8s2 ansible_ssh_host=10.21.1.142 ansible_ssh_user=root
-k8s3 ansible_ssh_host=10.21.1.143 ansible_ssh_user=root
+test1 ansible_ssh_host=10.21.0.130 ansible_ssh_user=root
+test2 ansible_ssh_host=10.21.0.104 ansible_ssh_user=root
+test3 ansible_ssh_host=10.21.0.105 ansible_ssh_user=root
 
 [master]
-k8s1 ansible_ssh_host=10.21.1.141 ansible_ssh_user=root
+test1 ansible_ssh_host=10.21.0.130 ansible_ssh_user=root
 
 [node]
-k8s1 ansible_ssh_host=10.21.1.141 ansible_ssh_user=root
-k8s2 ansible_ssh_host=10.21.1.142 ansible_ssh_user=root
-k8s3 ansible_ssh_host=10.21.1.143 ansible_ssh_user=root
+test1 ansible_ssh_host=10.21.0.130 ansible_ssh_user=root
+test2 ansible_ssh_host=10.21.0.104 ansible_ssh_user=root
+test3 ansible_ssh_host=10.21.0.105 ansible_ssh_user=root
 
 
 [cluster:children]

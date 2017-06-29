@@ -1,4 +1,6 @@
 ---
 - name: pull base pod image
   shell: docker pull "{{ IMAGE_PREFIX }}/pod-infrastructure:latest"
+  retries: 3
+  delay: "{{ retry_stagger | random + 3}}"
   

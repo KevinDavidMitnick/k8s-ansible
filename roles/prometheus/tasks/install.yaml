@@ -1,0 +1,17 @@
+---
+- name: make sure prometheus directory exists
+  file:
+    path: "{{ KUBE_DIR }}/prometheus"
+    state: directory
+    
+- name: copy prometheus yaml  to master machine
+  copy:
+    src: "{{ item }}"
+    dest: "{{ KUBE_DIR }}/prometheus/{{ item }}"
+  with_items:
+    - "prometheus.yaml"
+
+- name: install prometheus
+  shell: kubectl create -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/prometheus"

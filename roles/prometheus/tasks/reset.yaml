@@ -1,0 +1,11 @@
+---
+- name: remove prometheus
+  shell: kubectl delete -f .
+  args:
+    chdir: "{{ KUBE_DIR }}/prometheus"
+
+- name: make sure prometheus directory not exists
+  file:
+    path: "{{ KUBE_DIR }}/prometheus"
+    state: absent
+

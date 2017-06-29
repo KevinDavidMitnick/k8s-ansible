@@ -1,0 +1,3 @@
+---
+- name: deside action yaml include
+  include: "{{ action }}.yaml"
