@@ -17,4 +17,4 @@ KUBELET_API_SERVER="--api-servers=http://{{ KUBE_APISERVER }}:8080"
 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image={{ IMAGE_PREFIX }}/pod-infrastructure:latest"
 #
 ## Add your own!
-KUBELET_ARGS="--cgroup-driver=systemd --cluster-dns={{ KUBE_DNS_SVCIP }} --experimental-bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --require-kubeconfig --cert-dir=/etc/kubernetes/ssl --cluster-domain=cluster.local. --hairpin-mode promiscuous-bridge --serialize-image-pulls=false"
+KUBELET_ARGS="--cgroup-driver=cgroupfs --cluster-dns={{ KUBE_DNS_SVCIP }} --experimental-bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --require-kubeconfig --cert-dir=/etc/kubernetes/ssl --cluster-domain=cluster.local. --hairpin-mode promiscuous-bridge --serialize-image-pulls=false"

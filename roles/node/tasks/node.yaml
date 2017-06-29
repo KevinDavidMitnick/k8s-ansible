@@ -1,4 +1,11 @@
 ---
+- name: copy docker reop
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/yum.repos.d/{{ item }}"
+  with_items:
+    - "docker.repo"
+
 - name: install flannel and docker
   yum:
     name: "{{ item }}"
@@ -6,7 +13,7 @@
   with_items:
     - "conntrack"
     - "flannel"
-    - "docker"
+    - "docker-engine"
 
 - name: copy flanneld conf
   template:
