@@ -55,3 +55,8 @@
   shell: "kubectl create clusterrolebinding kubelet-bootstrap --clusterrole=system:node-bootstrapper --user=kubelet-bootstrap"
   args:
     chdir: "{{ KUBE_DIR }}"
+
+- name: generate dashboard pem
+  shell: openssl pkcs12 -export -in admin.pem -out admin.p12 -inkey admin-key.pem
+  args:
+    chdir: "{{ KUBE_DIR }}"
