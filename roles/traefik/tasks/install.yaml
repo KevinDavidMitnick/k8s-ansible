@@ -14,16 +14,6 @@
     - "ui.yaml"
 
 - name: install traefik
-  shell: kubectl create -f ingress.yaml
-  args:
-    chdir: "{{ KUBE_DIR }}/traefik"
-
-- name: install traefik
-  shell: kubectl create -f traefik.yaml
-  args:
-    chdir: "{{ KUBE_DIR }}/traefik"
-
-- name: install traefik
-  shell: kubectl create -f ui.yaml
+  shell: kubectl create -f .
   args:
     chdir: "{{ KUBE_DIR }}/traefik"
