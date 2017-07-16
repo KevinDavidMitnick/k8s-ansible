@@ -9,15 +9,21 @@
     src: "{{ item }}.j2"
     dest: "{{ KUBE_DIR }}/efk/{{ item }}"
   with_items:
-    - "efk-rbac.yaml"
-    - "es-controller.yaml"
-    - "es-service.yaml"
-    - "fluentd-es-ds.yaml"
-    - "fluentd-es-rbac.yaml"
-    - "kibana-controller.yaml"
-    - "kibana-service.yaml"
+    - "elasticsearch.yaml"
+    - "fluentd.yaml"
+    - "kibana.yaml"
 
-- name: install efk
-  shell: kubectl create -f .
+- name: install elasticsearch
+  shell: kubectl create -f elasticsearch.yaml
+  args:
+    chdir: "{{ KUBE_DIR }}/efk"
+
+- name: install fluentd
+  shell: kubectl create -f fluentd.yaml
+  args:
+    chdir: "{{ KUBE_DIR }}/efk"
+
+- name: install kibana
+  shell: kubectl create -f kibana.yaml
   args:
     chdir: "{{ KUBE_DIR }}/efk"
