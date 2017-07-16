@@ -1,11 +1,11 @@
 ---
-#- name: copy docker reop
-#  template:
-#    src: "{{ item }}.j2"
-#    dest: "/etc/yum.repos.d/{{ item }}"
-#  with_items:
-#    - "docker.repo"
-#
+- name: copy docker reop
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/yum.repos.d/{{ item }}"
+  with_items:
+    - "docker.repo"
+
 - name: install flannel and docker
   yum:
     name: "{{ item }}"
@@ -102,3 +102,6 @@
   with_items:
     - "kubelet"
     - "kube-proxy"
+
+- name: set docker forward rule from drop to accept
+  shell: iptables -w -P FORWARD ACCEPT

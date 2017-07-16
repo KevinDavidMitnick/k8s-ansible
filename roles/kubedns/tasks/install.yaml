@@ -9,12 +9,9 @@
     src: "{{ item }}.j2"
     dest: "{{ KUBE_DIR }}/kubedns/{{ item }}"
   with_items:
-    - "kubedns-cm.yaml"
-    - "kubedns-controller.yaml"
-    - "kubedns-sa.yaml"
-    - "kubedns-svc.yaml"
+    - "kubedns.yaml"
 
 - name: install kubedns
-  shell: kubectl create -f .
+  shell: kubectl create -f kubedns.yaml
   args:
     chdir: "{{ KUBE_DIR }}/kubedns"

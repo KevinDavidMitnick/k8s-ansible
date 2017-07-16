@@ -9,11 +9,9 @@
     src: "{{ item }}.j2"
     dest: "{{ KUBE_DIR }}/dashboard/{{ item }}"
   with_items:
-    - "dashboard-controller.yaml"
-    - "dashboard-rbac.yaml"
-    - "dashboard-service.yaml"
+    - "dashboard.yaml"
 
 - name: install dashboard
-  shell: kubectl create -f .
+  shell: kubectl create -f dashboard.yaml
   args:
     chdir: "{{ KUBE_DIR }}/dashboard"
