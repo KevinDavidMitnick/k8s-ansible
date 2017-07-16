@@ -1,5 +1,5 @@
 # /etc/sysconfig/docker
 
-INSECURE_REGISTRY='--insecure-registry=10.21.1.151'
+INSECURE_REGISTRY='--insecure-registry={{ INSECURE_REGISTRY }}'
 
-REGISTRY_MIRROR='--registry-mirror=https://u1qbyfsc.mirror.aliyuncs.comservice'
+REGISTRY_MIRROR='--registry-mirror={{ FAST_REGISTRY }}'
