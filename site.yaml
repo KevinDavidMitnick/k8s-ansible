@@ -1,48 +1,48 @@
 ---
-#- name: generate ca key
-#  hosts:
-#    - master
-#  roles:
-#    - {role: ca}
-#
-#- name: generate kubectl config
-#  hosts:
-#    - cluster
-#  roles:
-#    - {role: config}
-#
-#- name: install etcd
-#  hosts:
-#    - etcd
-#  roles:
-#    - {role: etcd}
-#
-#- name: install kube master
-#  hosts:
-#    - master
-#  roles:
-#    - {role: master}
-#
-#- name: install kube node
-#  hosts:
-#    - cluster
-#  roles:
-#    - {role: node}
-#
-#- name: install kubedns
-#  hosts:
-#    - master
-#  roles:
-#    - {role: kubedns,
-#       when: enable_kubedns | bool }
-#
-#- name: install dashboard
-#  hosts:
-#    - master
-#  roles:
-#    - {role: dashboard,
-#       when: enable_dashboard | bool }
-#    
+- name: generate ca key
+  hosts:
+    - master
+  roles:
+    - {role: ca}
+
+- name: generate kubectl config
+  hosts:
+    - cluster
+  roles:
+    - {role: config}
+
+- name: install etcd
+  hosts:
+    - etcd
+  roles:
+    - {role: etcd}
+
+- name: install kube master
+  hosts:
+    - master
+  roles:
+    - {role: master}
+
+- name: install kube node
+  hosts:
+    - cluster
+  roles:
+    - {role: node}
+
+- name: install kubedns
+  hosts:
+    - master
+  roles:
+    - {role: kubedns,
+       when: enable_kubedns | bool }
+
+- name: install dashboard
+  hosts:
+    - master
+  roles:
+    - {role: dashboard,
+       when: enable_dashboard | bool }
+    
 - name: install efk
   hosts:
     - master
@@ -50,16 +50,16 @@
     - {role: efk,
        when: enable_efk | bool }
 
-#- name: install traefik
-#  hosts:
-#    - master
-#  roles:
-#    - {role: traefik,
-#       when: enable_traefik | bool }
-#
-#- name: install prometheus
-#  hosts:
-#    - master
-#  roles:
-#    - {role: prometheus,
-#       when: enable_prometheus| bool }
+- name: install traefik
+  hosts:
+    - master
+  roles:
+    - {role: traefik,
+       when: enable_traefik | bool }
+
+- name: install prometheus
+  hosts:
+    - master
+  roles:
+    - {role: prometheus,
+       when: enable_prometheus| bool }
